@@ -1,0 +1,42 @@
+#include <iostream>
+using namespace std;
+void showmenu();
+int main()
+{
+	showmenu();
+	char ch;
+	
+	while(1){
+		do{
+			cout << "Please enter a c, p, t, or g: " << endl;
+			cin.get(ch).get();
+		} while (ch != 'c' && ch != 'p' && ch != 't' && ch != 'g' && ch != 'f');
+		if (ch == 'f')
+			break;
+		switch (ch) {	//	switch将找到对应choice的入口，然后顺序执行程序，如果碰到break就跳出switch
+		case 'c':		cout << "\a\n";
+			break;
+		case 'p':		cout << "lalala" << endl;
+			break;
+		case 't':		cout << "A maple is a tree.\n";
+			break;
+		case 'g':		cout << "Yaya is so cute!" << endl;
+			break;
+		default:	cout << "That's not a choice.\n";
+		}
+		cout << endl;
+		showmenu();
+	}
+	cout << "Bye!\n";
+	return 0;
+}
+
+void showmenu()
+{
+	cout << "Please enter one of the following choices:\n"
+		"c) carnivore		p) pianist\n"
+		"t) tree			g) game\n"
+		"f:quit";
+	cout << endl;
+}
+

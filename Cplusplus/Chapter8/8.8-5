@@ -1,0 +1,26 @@
+#include <iostream>
+using namespace std;
+template <typename T>
+T max(T arr[5]);
+
+int main()
+{
+	int arr1[5] = { 1, 2, 3, 4, 5 };
+	double arr2[5] = { 1.0,2.0,3.0,4.0,5.0 };
+	cout << max(arr1) << endl;
+	cout << max(arr2) << endl;
+	while (cin.get() != 'q')
+		;
+	return 0;
+}
+
+template <typename T>
+T max(T arr[5])
+{
+	T max_ = arr[0];
+	for (int i = 1; i < 5; i++) {
+		if (arr[i] > max_)
+			max_ = arr[i];
+	}
+	return max_;
+}

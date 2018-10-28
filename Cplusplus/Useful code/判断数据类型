@@ -1,0 +1,10 @@
+int x = 1;
+int y = 3;
+double z = 2.0;
+
+if (typeid(max(x, z)) == typeid(double))
+		cout << "double!" << endl;
+if (typeid(max(z, y)) == typeid(int))
+		cout << "int!" << endl;
+ 
+ // 最终数据类型都是double..

@@ -1,0 +1,52 @@
+#include <iostream>
+const int Max_Size = 5;
+double * fill_array(double ar[], int limit);
+void show_array(const double ar[], double * end);	//  const不说明ar数组内是常量，而是说明在这个函数内，ar中的数据是只读的，不能修改，否则报错
+void reverse(double ar[], double * end);
+
+int main()
+{
+	using namespace std;
+	double ar[Max_Size];
+	double * end;
+	end = fill_array(ar, Max_Size);
+	show_array(ar, end);
+	reverse(ar, end);
+	show_array(ar, end);
+
+	cout << "Done!\n";
+
+	cin.get();
+	cin.get();
+
+	return 0;
+}
+
+double * fill_array(double ar[], int limit)
+{
+	using namespace std;
+	double * p = ar;
+	while (p < (ar + limit) && cin >> *p) { 
+		++p;
+	}
+	return p;
+}
+
+void show_array(const double ar[], double * end)
+{
+	using namespace std;
+	for (const double *p = ar; p < end; p++) {
+		cout << *p << "  ";
+	}
+	cout << endl;
+}
+
+void reverse(double ar[], double * end)
+{
+	double temp;
+	for (double * p = ar, *q = end - 1; p < q; p++, q--) {
+		temp = *p;
+		*p = *q;
+		*q = temp;
+	}
+}

@@ -1,0 +1,45 @@
+#include <iostream>
+using namespace std;
+const int Arr_size = 10;
+int input(double * ar, int size);
+void print(double * ar, int size);
+double average(double * ar, int size);
+
+int main()
+{
+	double ar[Arr_size];
+	int size;
+	size = input(ar, Arr_size);
+	print(ar, size);
+	cout << "The average: " << average(ar, size);
+	while (cin.get() != 'q')
+		;
+	return 0;
+}
+
+int input(double * ar, int size)
+{
+	int count = 0;
+	cout << "Please enter " << size << " grade of golf, and quit with any char" << endl;
+	while (count<size && cin >> ar[count]) {
+		++count;
+	}
+	return count;
+}
+
+void print(double * ar, int size)
+{
+	for (int i = 0; i < size; i++) {
+		cout << ar[i] << "  ";
+	}
+	cout << endl;
+}
+
+double average(double *ar, int size)
+{
+	double sum = 0;
+	for (int i = 0; i < size; i++) {
+		sum += ar[i];
+	}
+	return sum / size;
+}

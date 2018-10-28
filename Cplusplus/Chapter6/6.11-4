@@ -1,0 +1,83 @@
+#include <iostream>
+#include <cctype>
+#include <cstring>
+using namespace std;
+const int strsize = 30;
+struct bop {
+	char fullname[strsize];
+	char title[strsize];
+	char bopname[strsize];
+	int preference;
+};
+
+void showmenu();
+void dis_name(bop *p);
+void dis_title(bop *p);
+void dis_bopname(bop *p);
+void dis_prefer(bop *p);
+
+int main()
+{
+	char choice;
+	bop member[5] =
+	{
+		{"Wimp Macho", "a", "lalala", 1},
+		{"Raki Rhodes", "b", "xixixi", 2},
+		{"Nikk", "c", "hahaha", 3}
+	};
+	while (1) {
+		showmenu();
+		cin.get(choice).get();
+		if (choice == 'q') {
+			break;
+		}
+		switch (choice) {	//	switch将找到对应choice的入口，然后顺序执行程序，如果碰到break就跳出switch
+		case 'a':		dis_name(member);
+			break;
+		case 'b':		dis_title(member);
+			break;
+		case 'c':		dis_bopname(member);
+			break;
+		case 'd':		dis_prefer(member);
+			break;
+		default:	cout << "That's not a choice.\n";
+		}
+	}
+	while (cin.get() != 'q')
+		;
+	return 0;
+}
+
+
+void showmenu()
+{
+	cout << "Please enter one of the following choices:\n"
+		"a) dispaly by name				b) display by title\n"
+		"c) display by bopname			d) display by preference\n"
+		"q:quit";
+	cout << endl;
+}
+
+
+void dis_name(bop *p)
+{
+	;
+}
+
+
+void dis_title(bop *p)
+{
+	;
+}
+
+
+void dis_bopname(bop *p)
+{
+	;
+}
+
+
+void dis_prefer(bop *p)
+{
+	;
+}

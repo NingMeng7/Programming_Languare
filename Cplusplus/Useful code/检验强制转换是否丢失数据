@@ -1,0 +1,27 @@
+#include <iostream>
+#include <climits>
+bool is_int(double x)	// 检测double x 能否赋值给int
+{
+	if (x <= INT_MAX && x >= INT_MIN)
+		return true;
+	else
+		return false;
+}
+int main()
+{
+	using namespace std;
+	double num;
+	cout << "Please enter an integer value: ";
+	cin >> num;
+	while (!is_int(num)) {
+		cout << "Out of range -- please try again!" << endl;
+		cin >> num;
+	}
+	int val = int(num);
+	cout << "You just enter the integer: " << val << endl;
+
+	while (cin.get() != 'q') {
+		;
+	}
+	return 0;
+}

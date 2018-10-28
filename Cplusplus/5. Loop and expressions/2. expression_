@@ -1,0 +1,12 @@
+(1)   与或的设计都是在知道答案后就停止计算这个表达式的值
+例如: x = 0;
+      x != 0 && x++;
+      由于第一个式子是假，所以整体表达式肯定是假，不会计算x++！！
+      
+(2)   "?" 表达式: expression ? expression1 : expression2
+if True == expression: 
+      value == expression1
+else 
+      value == expression2
+      
+x = (x > y) ? x : y;

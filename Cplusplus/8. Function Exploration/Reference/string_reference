@@ -1,0 +1,60 @@
+#include<iostream>
+#include <string>
+using namespace std;
+string version1(const string &s1, const string &s2);	//	temp会在函数结束后消失，不能返回temp引用
+const string & version2(string &s1, const string & s2);	
+const string & version3(string &s1, const string & s2);
+/*
+version2有一个tricky的地方是，参数列表中定义的是 cosnt string & s2,这使得调用的时候可以将C-style字符串作为参数传入
+常引用将会使得函数能够将实参转换成正确的类型，这个转换是通过string类定义的char*->string方法来实现的，因此最终实参被转换成string，并
+初始化形参引用。
+/*
+int main()
+{
+	string input;
+	string copy;
+	string result;
+
+	cout << "Please enter a string: ";
+	getline(cin, input);
+	copy = input;
+	cout << "Your string as entered: " << input << endl;
+	result = version1(input, "***");
+	cout << "Your string enhanced: " << result << endl;
+	cout << endl;
+
+	cout << "Resetting original string." << endl;
+	input = copy;
+	result = version2(input, "@@@");
+	cout << "Your string enhanced: " << result << endl;
+	cout << endl;
+
+	cout << "Resetting original string." << endl;
+	input = copy;
+	//result = version3(input, "@@@");
+	cout << "Your string enhanced: " << result << endl;
+
+	while (cin.get() != 'q')
+		;
+	return 0;
+}
+
+string version1(const string & s1, const string &s2)
+{
+	string temp;
+	temp = s2 + s1 + s2;
+	return temp;
+}
+
+const string & version2(string &s1, const string &s2)
+{
+	s1 = s2 + s1 + s2;
+	return s1;	//	返回作为参数传来的引用是安全的
+}
+
+const string & version3(string &s1, const string & s2)  //  这个函数返回了即将消失的内存的额引用，程序将会崩溃
+{
+	string temp;
+	temp = s2 + s1 + s2;
+	return temp;
+}

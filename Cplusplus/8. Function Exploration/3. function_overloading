@@ -1,0 +1,77 @@
+(1) 默认参数使得我们能够使用不同数目的参数调用同一个函数，而函数的多态(重载)可以让你使用多个同名函数，通过函数重载可以设计一系列的函数，使得它们完成
+相同的工作，但是使用不同的参数列表，同一个函数名具有不同的意义，决定于上下文(参数列表)
+
+(2) 函数特征标(function signature):参数列表， 如果两个函数的参数数目和类型相同，同时参数的排列顺序也相同，则它们的function signature 是相同的,只有
+函数特征标不同的情况下可以定义名称相同的函数。
+ex:
+  void print(const char * str, int width);
+  void print(double d, int width);
+  void print(long l, int width);
+  void print(int i, int width);
+  void print(const char *str);
+  
+  print("Pancakes", 15);  //  #1
+  print("Syrup");         //  #5
+  print(1999.0, 10);      //  #2
+  print(1999, 12);        //  #4
+  pirnt(1999L, 15);       //  #3
+
+Wrong ex:
+(a)
+  unsigned int year = 3210;
+  print(year, 6); 由于不存在任何一个函数原型与之匹配，C++在尝试用标准类型转换强制匹配的时候将会面临234三种转换形式，因此这种函数调用被视为是错误的。
+
+(b)  
+  引用与类型本身视为同一个特征标。
+  double cube(double x);
+  double cube(double & x);
+  
+  cout << cube(x);    //  参数与double 和 double引用都匹配。
+  
+(c)
+  const类型 matter
+  #1 void dribble(char * bits);
+  #2 void dribble(const char * cbits):
+  
+  #3 void dabble(char * bits);
+  #4 void drivel(const char * bits);
+  
+  const char p1[20] = "How's the weather?";
+  char p2[20] = "How's business?";
+
+  dribble(p1);  //  #2  
+  dribble(p2);  //  #1
+  dabble(p1);   //  invalid 非const值可以赋值给const变量,反之,const变量不能赋值给非const值。
+  dabble(p2);   //  dabble(char * bits);
+  drivel(p1);   //  drivel(const char * bits);
+  drivel(p2);   //  drivel(cosnt char * bits);
+
+(d) 
+  函数标matter而函数类型不同不起作用，例如:
+  long gronk(int n, float m);
+  double gronk(int n, float m);
+  并不能构成函数重载.
+  
+  long gronk(int n, float m);
+  double gronk(float n, float m);
+  构成函数重载
+
+(e) 重载引用参数
+  void staff(double &rs); //  可修改的左值参数,匹配严格限制
+  void staff(const double & rcs); //  可修改的左值参数,const左值参数,右值参数(例如两个double变量之和)
+  #1  void stove(double & r1);
+  #2  void stove(const double & r2);
+  #3  void stove(double && r3);
+
+  double x = 55.5;
+  const double y = 32.0;  
+  stove(x); //  #1 
+  stove(y); //  #2
+  stove(x + y); //  #3,如果不定义3,将会调用#2
+  
+  conclusion:   重载调用的时候将会调用最匹配的版本
+  
+  
+  (3) 对编译器而言，它将会对函数进行名称修饰，通过添加一组特殊的随函数特征标而异的的字符使得C++能够对函数重载进行追踪
+  
+  

@@ -1,0 +1,19 @@
+#include <iostream>
+const int Max = 10;
+int main()
+{
+	using namespace std;
+	double record[Max];
+	double sum = 0;
+	int i = 0;
+	cout << "Please enter the donation and quit with a bad input!" << endl;
+	while (i<Max && cin>>record[i]) {	//	赋值的优先级小于!=，这个括号必不可少
+		sum += record[i];
+		i++;
+	}
+	cout << "The average is: " << sum / i << endl;
+	cin.clear();
+	while (cin.get() != 'q')  //  bad input将会留在输入队列中
+		;
+	return 0;
+}

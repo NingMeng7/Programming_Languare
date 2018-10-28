@@ -1,0 +1,20 @@
+#include <iostream>
+using namespace std;
+void print(char *, int n = 0);
+int main()
+{
+	char str[] = "This is a str!";
+	print(str);
+	cout << endl;
+	print(str, 10);
+	while (cin.get() != 'q')
+		;
+	return 0;
+}
+
+void print(char * str, int n)
+{
+	if (n > 0)
+		print(str, n - 1);
+	cout << str << endl;
+}

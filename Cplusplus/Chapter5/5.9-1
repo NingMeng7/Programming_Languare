@@ -1,0 +1,29 @@
+#include <iostream>
+int main()
+{
+	using namespace std;
+	int num1, num2;
+	long long sum = 0;
+	cout << "Please enter the first integer: " << endl;
+	while (!(cin >> num1)) {
+		cin.clear();
+		while (cin.get() != '\n')
+			;
+		cout << "Please enter an integer!!" << endl;
+	}
+	cout << "Please enter the second integer: " << endl;
+	while (!(cin >> num2)) {
+		cin.clear();
+		while (cin.get() != '\n')
+			;
+		cout << "Please enter an integer!!" << endl;
+	}
+	
+	for (int i = num1; i <= num2; i++) {
+		sum += i;
+	}
+	
+	cout << "The sum of all the integers between " << num1 << " and " << num2 << " is: " << sum << endl;
+	
+	return 0;
+}

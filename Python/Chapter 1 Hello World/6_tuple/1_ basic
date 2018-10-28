@@ -1,0 +1,6 @@
+# tuple: 初始化后无法修改没有append,insert等操作 不可变对象
+print('The following is the example of tuple');
+classmates = ('Michael','KangKang','Jane','Maria');
+print(classmates);
+t = (1,) # 只有一个元素的tuple需要加一个逗号
+print(t)

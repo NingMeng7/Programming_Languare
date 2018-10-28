@@ -1,0 +1,179 @@
+//  int a = 1;
+//  int & ref = 2 * a;  //报错,非常量引用的初始值必须为左值	
+
+
+一.引用
+
+引用是C++中引入的一个对C进行超越的特性，在C中，函数调用时参数的传递是按值传递的，这样调用的函数中对参数的修改无法对原函数进行影响，此外，由于拷贝的开销，在深递归和占用内存较大的变量传递的时候，很容易爆栈->__->，加入引用后，按引用传递，使得函数使用的不再是实参的副本，首先看个例子：
+
+[cpp] view plain copy
+#include <iostream>  
+int main()  
+{  
+    using namespace std;  
+    int rats = 101;  
+    int & rodents = rats;   //  注意，引用并不是指针的伪装表示，事实上，必须在声明引用的时候将其初始化，而不能先声明再初始化  
+    cout << "rats = " << rats << endl;  
+    cout << "rodents = " << rodents << endl;  
+    rodents++;  
+    cout << "rats = " << rats << endl;  
+    cout << "rodents = " << rodents << endl;  
+    cout << "The address of rats: " << &rats << endl;  
+    cout << "The address of rodents: " << &rodents << endl;  
+    while (cin.get() != 'q')  
+        ;  
+    return 0;  
+}  
+上述代码运行的结果是：
+
+rats = 101
+
+rodents = 101
+
+rats = 102
+
+rodents = 102
+
+The address of rats: 006FFD4C
+
+The address of rodents: 006FFD4C
+
+可以看出，rodents实际上相当于是变量rats的一个别名，具有相同的地址，对rodents的修改也会反应在rats上。
+
+二.临时变量与常引用
+
+需要指出的是，按引用传递对实参和形参的匹配程度有更大的限制，首先来看看const 引用和引用形参的两种函数声明在面对不同的实参类型的时候的反应：
+
+[cpp] view plain copy
+#include <iostream>  
+using namespace std;  
+void test_const(const int &a)  
+{  
+    cout << "Yes, you can do it!" << endl;  
+}  
+void test(int &a)  
+{  
+    cout << "Yes, you can do it!" << endl;  
+}  
+int main()  
+{  
+    int a = 3;  
+    double b = 3;  
+    short c = 3;  
+    test_const(a);      //  valid  
+    test_const(b);      //  valid  
+    test_const(c);      //  valid  
+    test_const(a + 1);  //  valid  
+    test(a);        //  valid  
+    test(b);        //  invalid double类型无法转换为int &  
+    test(c);        //  invalid short类型无法转换为 int &  
+    test(a + 1);        //  invalid  
+    while (cin.get() != 'q')  
+             ;  
+        return 0;  
+}  
+注意到，对于普通引用参数而言，参数匹配的要求很高，对于参数是const 引用的情况，在实参和引用参数不匹配的情况下，C++将会生成临时变量:
+
+a)   实参的类型正确，但不是左值
+
+b)   实参的类型不正确，但可以被转换为正确的类型
+
+这里先讨论一下左值的定义：
+
+在学C语言的时候我其实一直理解的是左值就是可以赋值，也就是可以放在'='左边的值，在C语言这句话应该是对的，但是在C++中，左值还包括了，const变量。
+
+a)    左值参数是可以被引用的数据类型，eg: 变量x, 数组元素a[0]，结构成员student.name, 指针p, *p
+
+b)    典型的非左值，字面常量(444)，包含多项的表达式(x+1-9), 注意"abc"是左值，因为它的值实际上是一个地址
+
+c)    常规变量是可修改的左值，const变量是不可修改的左值，共同点是都可以通过地址访问他们
+
+
+[cpp] view plain copy
+#include <iostream>  
+using namespace std;  
+double refun(const double &a)  
+{  
+    return a * a * a;  
+}  
+  
+int main()  
+{  
+    double side = 3.0;  
+    double * pd = &side;  
+    double & rd = side;  
+    long edge = 5L;  
+    double len[4] = { 2.0,5.0,10.0,12.0 };  
+    double c1 = refun(side);    //  左值 && 类型匹配  
+    double c2 = refun(len[2]);  //  左值 && 类型匹配  
+    double c3 = refun(rd);      //  左值 &&   类型匹配  
+    double c4 = refun(*pd);     //  左值 && 类型匹配  
+      
+    double c5 = refun(edge);    //  左值，但类型不匹配  
+    double c6 = refun(7.0);     //  类型正确，但不是左值  
+    double c7 = refun(side + 10.0); //  类型正确，但不是左值  
+  
+    cout << "c1 = " << c1 << endl;  
+    cout << "c2 = " << c2 << endl;  
+    cout << "c3 = " << c3 << endl;  
+    cout << "c4 = " << c4 << endl;  
+    cout << "c5 = " << c5 << endl;  
+    cout << "c6 = " << c6 << endl;  
+    cout << "c7 = " << c7 << endl;  
+    while (cin.get() != 'q')  
+        ;  
+    return 0;  
+}  
+对于c5,c6,c7三次调用，编译器都将生成一个临时的匿名变量，并让a指向它，这些临时变量只在函数调用周期内存在，此后编译器可以随意将其删除。
+
+我原本想写的函数是a = a + 1；因为我想看看临时变量导致的引用会不会对原变量修改，后面发现const变量不能修改，那这个常量引用有啥用呢...
+
+我比较了一下：
+
+a)    按值传递能够保护数据(不对实参进行影响)，但是会产生拷贝的开销，尤其是大容量参数的时候开销特别大
+
+b)    普通引用传递：能够节省拷贝的开销，并且能够影响到实参，但是问题是调用的时候对变量限制很严格
+
+c)    常量引用：当我们不希望对实参进行修改，又希望用引用的时候，常量引用对变量的限制放的更宽，同时又能节省拷贝的开销。
+
+
+
+
+
+最后一个程序，两个swap都过不了编译，一个是因为类型不匹配，一个是因为你对const变量进行了修改
+
+[cpp] view plain copy
+#include <iostream>  
+void swap(int &a, int &b)  
+{  
+    int temp;  
+  
+    temp = a;  
+    a = b;  
+    b = temp;  
+}  
+  
+void swapcon(const int &a, const int &b)  
+{  
+    int temp;  
+    temp = a;  
+    a = b;  
+    b = temp;  
+}  
+  
+int main()  
+{  
+    long a = 3, b = 5;  
+    swap(a, b);  
+    swapcon(a, b);  
+    while (cin.get() != 'q')  
+        ;  
+    return 0;  
+}  
+使用const的理由:
+
+a)    避免无意中修改数据的错误，从最后一个程序可以看到，编译器将会帮你捕捉这种错误，最可怕的是编译过了，跑起来了，结果不对。。。
+
+b)    const使得函数能够处理const和非const实参，否则只能接受非const实参: (不能将const变量赋值给非const指针/引用)
+
+c)    使用const引用使得函数能够正确生成并使用临时变量

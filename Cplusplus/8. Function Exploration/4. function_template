@@ -1,0 +1,126 @@
+(1) 基本的函数模板例子
+
+considering:
+void swap(int &a, int &b);
+要改成对double类型的修改，必须将所有int替换成double，而全局替换可能会将变量名中的int替代...
+C++引入了函数模板功能来自动完成这种类似函数的替换：
+
+template <typename AnyType> //  建立一个模板，并且将类型命名为AnyType,类型名只需要符合C++的命名规则即可,typename 和 template是必须的
+void Swap(AnyType & a, AnyType & b)
+{
+  AnyType temp;
+  temp = a;
+  a = b;
+  b = temp;
+}
+
+模板的声明并不会创造任何函数，在调用Swap的时候，编译器根据需要创建相应类型的函数：
+需要注意的是，使用函数模板并不会使得最终的可执行程序缩短，最终的代码将不会包含任何的模板，只不过手工定义函数的过程将会被编译器自动完成。
+
+(2) 模板重载
+
+(3) 模板局限
+  
+  模板也会带来一些问题，由于对于不同类型的数据的操作是有差别的，例如，我们可以将两个基本类型int或者double进行交换，但是我们并不能将两个数组进行交换，此时
+模板函数可能并不能适用于每一种变量类型。
+
+(4) 隐式实例化，显示实例化，显示具体化
+
+a)  对一个模板而言，给它传入参数，编译器将会根据参数类型来生成一个函数实例，这叫做隐式实例化
+b)  C++允许程序员对模板函数显示进行实例化：
+    template void Swap<int>(int, int);  //  explicit instantiation
+    这个声明的意思是：始用Swap()模板生成int类型的函数定义。
+c)  显示具体化:不同于显示实例化，有时候我们希望定义一个和模板函数算法不同的函数，我们选择使用显示具体化，当编译器匹配到与函数调用匹配的具体化定义，将
+    使用这个定义，而不再去寻找模板。(覆盖模板)
+    
+    template <> void Swap<int>(int &, int &); //  explicit specialization
+    template <> void Swap(int &, int &);  //  explicit specialization
+    
+    RK: 不能在同一个文件/转换单元中使用同一种类型的显示实例和显示具体化
+    非模板版本 > 显示具体化 > 模板生成版本
+
+(5)  显示实例化中的强制转换
+
+template <class T>
+    T Add(T a, T b)
+    {
+      return a + b;
+    }
+    int m = 6;
+    double x = 6.6;
+    Add <double>(x,m);  //  模板要求x和m的类型相同，此时m将会被强制转换为double完成实例化
+    
+    而Swap<double>(m, x);  //  不起作用，因为第一个参数的类型是double &无法指向int类型的m
+    
+(6) 一个例子:
+
+  template <class T>
+    void Swap(T &, T &);
+    
+    template <> void Swap<job>(job &, job &); //  显式具体化
+    
+    int main(void)
+    {
+      template void Swap<char>(char &, char &); //  显式实例化
+      short a, b;
+      job n, m;
+      char g, h;
+      
+      Swap(a, b); //  隐式实例化
+      Swap(n, m); //  使用显式具体化的函数
+      Swap(g, h); //  使用显式实例化的函数
+    }
+    
+(7) 编译器的决策
+    
+    #1  void may(int);
+    #2  float may(float, float = 3);
+    #3  void may(char);
+    #4  char * may(const char *);
+    #5  char may(const char &);
+    #6  template<class T> void may(const T &);
+    #7  template<class T> void may(T *);
+    
+    may('B');
+    
+    由于char类型或者整数类型无法被强制转换为char*(指针),因此#4 #7 无法被匹配
+    在余下的五个函数中，编译器遵循:
+    a)  完全匹配，常规函数优先于模板
+    b)  提升转换(char,shorts->int, float -> double)
+    c)  标准转换(int->char, long->double);
+    d)  用户定义的转换，如类声明中定义的转换
+    
+    (#3,#5) > #6  :完全匹配中，常规函数优先于模板
+    #1 > #2:  char->int为提升转换，char->float为标准转换
+    #6 > #1 > #2 #6是完全匹配的
+    
+讨论：完全匹配?
+    
+    在进行完全匹配的时候，C++允许某些无关紧要的转换，如:
+    实参                        形参
+    type                        type &
+    type &                      type
+    type[]                      * type
+    type(argument-list)         type(*)(argument-list)
+    type                        const type
+    type                        volatile type
+    type*                       const type
+    type*                       volatile type*
+    
+    因此，如果有:
+    struct  blot {int a; char b[10];};
+    blot ink = {25, "spots"};
+    recycle(ink);
+    
+    #1  void  recycle(blot);
+    #2  void  recycle(const blot);
+    #3  void  recycle(blot &);
+    #4  void  recycle(const blot &);
+    都将是完全匹配的，正如你所预期的，在有多个匹配的原型，大部分情况下，编译器将会报错。
+讨论：最佳匹配？
+    a)  指向非const数据的指针和引用优先和非const指针和引用参数进行匹配，即#3>#4，请注意，一定要是指针或者引用，对于#1，#2，将会报错
+    b)  非模板函数 > 模板函数(包括显式具体化), 显式具体化 > 隐式具体化
+    c)  部分排序规则，需要转化的越少，越具体。
+    
+(8) 编译器将会寻找最佳匹配的函数，如果只存在一个这样的函数，就选择它，如果存在多个这样的函数，将选择非模板函数，如果没有非模板函数，将会选择最具体
+    的函数，除此之外，编译器将会给出错误信息。

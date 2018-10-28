@@ -1,0 +1,71 @@
+#include <iostream>
+#include <string>
+using namespace std;
+struct donator
+{
+	string name;
+	double money;
+};
+void show_grand(donator *p, int n);
+void show_normal(donator *p, int n);
+int main()
+{
+	cout << "Please enter the number of donators: ";
+	int num;
+	while (!(cin >> num)) {	
+		cin.clear(); 	
+		while (cin.get() != '\n')
+			continue;
+		cout << "Bad input; Please enter a number: ";
+	}
+	donator *p = new donator[num];
+	for (int i = 0; i < num; i++) {
+		cout << "Please enter the name of the donator #" << (i + 1) << ": ";
+		while (cin.get() != '\n') {
+			continue;
+		}
+		getline(cin, (p + i)->name);
+		cout << "Please enter the money donated by the #" << (i + 1) << " donator: ";
+		cin >> (p + i)->money;
+	}
+
+	
+	show_grand(p, num);
+	show_normal(p, num);
+	delete[]p;
+	while (cin.get() != 'q')
+		;
+	return 0;
+}
+
+
+void show_grand(donator *p, int n)
+{
+	int flag = 0;
+	cout << "\tGrand Patrons" << endl;
+	for (int i = 0; i < n; i++) {
+		if ((p + i)->money > 10000) {
+			cout << "Name: " << (p + i)->name << "   money: " << (p + i)->money << endl;
+			flag = 1;
+		}
+	}
+	if (!flag) {
+		cout << "None!" << endl;
+	}
+}
+
+
+void show_normal(donator *p, int n)
+{
+	cout << "\tPatrons" << endl;
+	int flag = 0;
+	for (int i = 0; i < n; i++) {
+		if ((p + i)->money <= 10000) {
+			cout << "Name: " << (p + i)->name << "   money: " << (p + i)->money << endl;
+			flag = 1;
+		}
+	}
+	if (!flag) {
+		cout << "None!" << endl;
+	}
+}

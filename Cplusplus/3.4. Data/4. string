@@ -1,0 +1,2 @@
+a)  Compare char[Size] with string, string更像是字符串的instance，而前者更像是存储一个字符串的存储单元
+b)  类设计让程序可以自动处理string的大小，例如str1声明长度是0，而cin之后将自动调整其长度

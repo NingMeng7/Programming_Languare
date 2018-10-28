@@ -1,0 +1,26 @@
+#include <iostream>
+using namespace std;
+long long int fact(long int n);
+int main() 
+{
+	int number;
+	cout << "Please enter the number: ";
+	while (cin >> number) {
+		cout << number << "! = " << fact(number) << endl;
+	}
+	cin.clear();
+	while (cin.get() != 'q') {
+		;
+	}
+	return 0;
+}
+
+
+long long int fact(long int n)
+{
+	if (n == 0) {
+		return 1;
+	}
+	else
+		return n * fact(n - 1);
+}

@@ -1,0 +1,49 @@
+#include <iostream>
+using namespace std;
+#include <cstring>
+struct stringy {
+	char * str;
+	int ct;
+};
+
+void show(const stringy &, int n = 1);
+void show(const char *, int n = 1);
+void set(stringy &, char *);
+int main()
+{
+	stringy beany;
+	char testing[] = "Reality isn's what it used to be. ";
+
+	set(beany, testing);
+
+	show(beany);
+	show(beany, 2);
+	cout << endl;
+	testing[0] = 'D';
+	testing[1] = 'u';
+	show(testing);
+	show(testing, 3);
+	show("Done!");
+	while (cin.get() != 'q')
+		;
+	return 0;
+}
+
+void set(stringy & str, char * testing)
+{
+	str.str = testing;
+}
+
+void show(const stringy & str, int n)
+{
+	for (int i = 0; i < n; i++) {
+		cout << str.str << endl;
+	}
+}
+
+void show(const char * str, int n)
+{
+	for (int i = 0; i < n; i++) {
+		cout << str << endl;
+	}
+}

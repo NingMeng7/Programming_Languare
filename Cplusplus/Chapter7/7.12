@@ -1,0 +1,160 @@
+const的理解: 进一步扩展自由度，基本类型在传递的时候传递的是拷贝副本，我们无法对其在子函数影响父函数，所以我们可以考虑用引用或者指针来实现这个功能，
+但是有时候我们又不希望子函数能改变父函数中变量的值，此时我们选择用const限定符来保护数据
+
+1. 
+a)  函数定义  
+void cheers(int a)
+{
+  statement(s);
+  return;
+}
+b)  提供函数原型： 
+void cheers(int);
+c)  调用函数  
+cheers(a);
+
+2.
+a)  void igor();
+b)  float tofu(int);
+c)  double mpg(double a, double b);
+d)  long summation(long ar[], int n);
+e)  double(const char *str);
+f)  void ofcourse(boss);
+g)  char * plot(map *p);
+
+3.
+void  assignment_3(int ar[], int size, int n)
+{
+  for(int i = 0; i < size; i++) {
+    ar[i] = n;
+  }
+  return;
+}
+
+4.  
+void assignment_4(int *begin, int *end, int n)
+{
+  int * pt = begin;
+  for(; pt != end; pt++){
+    *pt = n; 
+  }
+  return;
+}
+
+5.
+double max(doube ar[], int size)
+{
+  if(size == 0) {
+    returen false;
+  }
+  double max_temp = ar[0];
+  for(int i = 1; i < n; i++) {
+    if(ar[i] > max_temp)
+      max_temp = ar[i];
+  }
+  return max_temp;
+}
+
+6.为什么不对基本类型用限定符const
+传递过去的基本类型本来就是拷贝的副本吧，已经不会对实参进行影响了，不需要再来一个const
+
+7. C++中的C-style字符串：
+字符数组，字符串常量，字符串指针
+
+8. 
+int replace(char *str, char c1, char c2)
+{
+  int count = 0;
+  while (*str != '\0') {
+    if((*str) == c1) {
+      *str = c2;
+      ++count;
+    }
+    ++str;
+  }
+  return count;
+}
+
+9.
+cout << *"pizza" << endl;         ~p
+cout << "taco"[2] << endl;        ~c
+说明字符串常量是一个char *类型，值是第一个字符的地址
+
+10.
+func(glitz);  能保护数据
+func(&glitz); 能提高效率，不必拷贝，并且能够修改数据
+
+11.
+int judge(int (*pf)(const char*));
+
+12.
+void show(application ap)
+{
+  using namespace std;
+  cout << "Name: " << ap.name << endl:
+  cout << "credit ratings: ";
+  for (int i = 0; i < 3; i++) {
+    cout << ap.credit_ratings[i];
+  }
+  cout << endl;
+  return;
+}
+
+void show(application *ap)
+{
+  using namespace std;
+  cout << "Name: " << ap->name << endl:
+  cout << "credit ratings: ";
+  for (int i = 0; i < 3; i++) {
+    cout << (ap->credit_ratings)[i];
+  }
+  cout << endl;
+  return;
+}
+
+13. 
+#include <iostream>
+struct applicant {
+	char name[30];
+	int credit_ratings[3];
+};
+typedef const char * (*p_func)(const applicant * a1, const applicant * a2);
+void f1(applicant * a);
+const char * f2(const applicant * a1, const applicant * a2);
+int main()
+{
+	using namespace std;
+	applicant temp;
+	const applicant *q, *qq;
+	q = qq = &temp;
+	
+	void(*p1)(applicant *a) = f1;
+	p_func p2 = f2;
+	*f2(q, qq);
+	//const char * (*p2)(const applicant * a1, const applicant * a2) = f2;
+	
+
+	void(*ap[5])(applicant *a);
+	p_func pa[5] = { f2,f2,f2,f2,f2 };
+	cout << endl;
+	pa[0](q, qq);
+	
+	
+	
+	while (cin.get() != 'q')
+		;
+	return 0;
+
+	
+}
+
+void f1(applicant * a)
+{
+	;
+}
+const char * f2(const applicant * a1, const applicant * a2)
+{
+	using namespace std;
+	cout << "Yes!" << endl;
+	return "abc";
+}

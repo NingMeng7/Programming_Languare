@@ -1,0 +1,44 @@
+#include <iostream>
+using namespace std;
+struct box {
+	char maker[40];
+	float height;
+	float width;
+	float length;
+	float volume;
+};
+void print(box temp);
+void set_volume(box *p);
+
+int main()
+{
+	box bo = {
+				"Hello Kitty",
+				3.0,
+				3.0,
+				5.9,      //  5，9这个错误编译器没有捕捉出来卧槽
+				0
+			};
+	box *p = &bo;
+	set_volume(p);
+	print(bo);
+	while (cin.get() != 'q')
+		;
+	return 0;
+}
+
+
+void print(box temp)
+{
+	cout << "Name of maker: " << temp.maker << endl;
+	cout << "Height: " << temp.height << endl;
+	cout << "Weight: " << temp.width << endl;
+	cout << "Length: " << temp.length << endl;
+	cout << "Volume: " << temp.volume << endl;
+}
+
+
+void set_volume(box *p)
+{
+	p->volume = p->height * p->width * p->length;
+}

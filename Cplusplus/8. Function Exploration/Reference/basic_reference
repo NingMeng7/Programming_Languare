@@ -1,0 +1,52 @@
+#include <iostream>
+int main()
+{
+	using namespace std;
+	int rats = 101;
+	int & rodents = rats;	//  注意，引用并不是指针的伪装表示，事实上，必须在声明引用的时候将其初始化，而不能先声明再初始化
+	cout << "rats = " << rats << endl;
+	cout << "rodents = " << rodents << endl;
+	rodents++;
+	cout << "rats = " << rats << endl;
+	cout << "rodents = " << rodents << endl;
+	cout << "The address of rats: " << &rats << endl;
+	cout << "The address of rodents: " << &rodents << endl;
+	while (cin.get() != 'q')
+		;
+	return 0;
+}
+
+
+#include <iostream>
+int main()
+{
+	using namespace std;
+	int rats = 101;
+	int & rodents = rats;	//相当于给rats另外起了一个名字
+
+	cout << "rats = " << rats << endl;
+	cout << "rodents = " << rodents << endl;
+
+	cout << endl;
+
+	cout << "rats address: " << &rats << endl;
+	cout << "rodents address: " << &rodents << endl;
+
+	cout << endl;
+
+	int bunnies = 50;
+	rodents = bunnies;	//  尝试改变rodents引用对象，但是事实上这句语句最终被理解为赋值
+	cout << "bunnies = " << bunnies << endl;
+	cout << "rats = " << rats << endl;
+	cout << "rodents = " << rodents << endl;
+	
+	cout << endl;
+	
+	cout << "bunnies address: " << &bunnies << endl;
+	cout << "rats address: " << &rats << endl;
+	cout << "rodents address: " << &rodents << endl;
+
+	while (cin.get() != 'q')
+		;
+	return 0;
+}

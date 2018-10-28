@@ -1,0 +1,89 @@
+1.  内联函数直接用函数的代码来替换调用处的代码，好处是避免了jmp的开销，坏处是这样会导致内存消耗变大，用在了几个地方，就需要几个函数的副本，综合考虑，
+对代码执行时间比较短(例如一行代码)(compared to jmp)，需要频繁调用的地方，用内联函数比较划算
+2.  
+  (a) void song(const char * name, int times = 1);
+  (b) 不需要修改，事实上也不能修改
+  (c) 可以,但是引入一个新的问题，如果我希望name用默认值而times不用怎么办
+(1)  默认参数在有原型的时候，必须定义在函数原型中，在没有原型的时候，在定义中出现
+(2)  默认参数应当定义在普通参数的右侧
+
+3.  void iquote(int n);
+    void iquote(double n);
+    void iquote(const char * str);
+
+4.#include<iostream>
+struct box {
+	char maker[40];
+	float height;
+	float width;
+	float length;
+	float volume;
+};
+void print(const box &bo);
+void set(box &bo);
+void print(const box & bo)
+{
+	using namespace std;
+	cout << "Maker: " << bo.maker << endl;
+	cout << "Height: " << bo.height << endl;
+	cout << "Width: " << bo.width << endl;
+	cout << "Length: " << bo.length << endl;
+	cout << "Volume: " << bo.volume << endl;
+}
+void set(box & bo)
+{
+	bo.volume = bo.height * bo.length * bo.width;
+}
+
+5.
+void fill(std::array<double, Seasons> & pa);
+void show(const std::array<double, Seasons> & da);
+main函数里调用修改为：
+fill(expense);
+
+6.
+(a)
+double mass(double d, double v = 1.0);
+
+double mass(double d, double v);
+double mass(double d);
+
+(b)
+无法用提供默认值的方式实现，默认值必须从右往左提供
+
+void repeat(int times, const char *str);
+void repeat(const char * str);
+
+(c)
+函数重载:
+int average(int a, int b);
+double average(double x, double y);
+
+d
+不行，会导致特征标相同
+7.
+这个版本有问题，最终应该是因为类型提升，有double的时候，问号运算符整体总是double类型。
+template <typename T1, typename T2>
+auto f(T1 x, T2 y) -> decltype(x>y? x : y)
+{
+    return x > y ? x : y;
+}
+
+template <typename T>
+T max(T x, T y)
+{
+    return x > y ? x : y;
+}
+
+8.
+template<> box max(box b1, box b2)
+{
+    return b1.volume > b2.volume ? b1 : b2;
+}
+
+9.
+v1:float
+v2:float &
+v3:float &
+v4:int
+v5:double  //  类型提升

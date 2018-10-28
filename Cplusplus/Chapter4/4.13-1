@@ -1,0 +1,25 @@
+#include <iostream>
+int main()
+{
+	using namespace std;
+	char firname[30];
+	char lasname[30];
+	char grade;
+	int age;
+	cout << "What is your first name? " << endl;
+	cin.getline(firname, 30);
+	cout << "What is your last name? " << endl;
+	cin.getline(lasname, 30);
+	cout << "What letter grade do you deserve? " << endl;
+	cin >> grade;
+	cout << "What is your age? " << endl;
+	cin >> age;
+	
+	cout << "Name: " << lasname << ", " << firname << endl;
+	cout << "Grade: " << char(grade + 1) << endl;
+	cout << "Age: " << age << endl;
+
+	while (cin.get() != 'q')
+		;
+	return 0;
+}

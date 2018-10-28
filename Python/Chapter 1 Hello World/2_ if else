@@ -1,0 +1,36 @@
+# if else
+# 如果条件是True就把缩进！！的语句执行
+# 别忘记 if, else, elif 条件后的冒号!!!
+
+
+try :
+	age = float(input('Please enter your age: '))
+	if age - int(age) == 0:
+		if age >= 18:
+			print('your age is', age)
+			print('adult')
+		else:
+			print('your age is', age)
+			print('teenager')
+	else:
+		print('Are you kidding me????')
+except ValueError as e:
+	print('Error: ', e)
+finally:
+	input('waiting...')
+
+
+weight = float(input('please input your weight by the unit of kg: '))
+height = float(input('Please input your height by the unit of m: '))
+BIM = weight/(height*height)
+
+if   BIM >= 32:
+	print('严重肥胖')
+elif BIM >= 28:
+	print('肥胖')
+elif BIM >= 25:
+	print('过重')
+elif BIM >=18.5:
+	print('正常')
+else:
+	print('过轻')

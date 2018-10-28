@@ -1,0 +1,16 @@
+#include <iostream>
+#define eps 1e-6
+int main()
+{
+	using namespace std;
+	double sum = 0;
+	double num;
+	do {
+		cout << "Please enter a number and quit with 0: ";
+		cin >> num;
+		sum += num;
+		cout << "Until now, we get the sum: " << sum << endl;
+	} while (num > eps);
+	
+	return 0;
+}

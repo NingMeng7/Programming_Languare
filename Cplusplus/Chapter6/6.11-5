@@ -1,0 +1,22 @@
+#include <iostream>
+using namespace std;
+int main()
+{
+	double salary;
+	cout << "Please enter your salary and quit with a bad input: ";
+	while (cin >> salary && salary >= 0) {
+		
+		switch (int((salary-1)/5000))
+		{
+		case 0:		cout << "The revenue is: 0 tvarp" << endl;	break;
+		case 1:	;
+		case 2:		cout << "The revenue is: " << 0.1 * salary << " tvarps" << endl;	break;
+		case 3:	;
+		case 4:	;
+		case 5:	;
+		case 6:		cout << "The revenue is: " << 0.15 * salary << " tvarps" << endl;	break;
+		default:	cout << "The revenue is: " << 0.2 * salary << " tvarps" << endl;
+		}
+	}
+	return 0;
+}

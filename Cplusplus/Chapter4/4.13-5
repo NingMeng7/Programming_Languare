@@ -1,0 +1,22 @@
+#include <iostream>
+struct CandyBar {
+	char name[30];
+	float weight;
+	int cal;
+};
+
+int main()
+{
+	using namespace std;
+	CandyBar candy = {
+		"Mocha Munch",
+		2.3f,
+		350
+	};
+	cout << "Name: " << candy.name << endl;
+	cout << "Weight: " << candy.weight << endl;
+	cout << "Cal: " << candy.cal << endl;
+	while (cin.get() != 'q')
+		;
+	return 0;
+}

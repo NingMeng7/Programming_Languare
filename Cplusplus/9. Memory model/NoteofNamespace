@@ -1,0 +1,105 @@
+名称空间: C++中名称可以是变量、函数、结构、枚举、类以及类和结构的成员，前面已经有示例代码显示静态变量/函数与外部变量之间冲突的一些解决办法或者优先级，
+         但是，随着项目的增大，名称之间相互冲突的可能性也会越来越大。调用多个厂商的类库的时候，可能会导致名称冲突，如两个库分别定义了 List Tree Node 的
+         类，但是定义不兼容，为了解决这个问题,C++引入了名称空间工具，用以控制名称的作用域。
+(1) 术语
+    (a) 声明区域(declaration region): 声明区域是可以在其中进行声明的区域，例如可以在函数外面声明全局变量，对于这种变量，其声明区域为声明所在的文件、
+    (b) 潜在作用域(potential scope): 变量的潜在作用域从声明点，到其声明区域的结尾，潜在作用域比声明区域小，因为变量必须定义后才能使用。
+    (c) 作用域(scope): 变量并非在全潜在作用域都是可见的，考虑到屏蔽作用的情况，作用域用来描述变量对程序而言可见的区域。
+    (d) 名称空间层次，C++定义了一种名称空间层次，在各个层次可以声明名称，在一个函数的局部变量不会与在另一个函数中声明的局部变量发生冲突，这是因为这些
+        名称与其他声明区域中声明的名称是独立的。
+(2) 新的名称空间特性
+    C++提供了一种新的特性，即通过定义一个新的声明区域(名称空间层次)，这个区域中声明的名称不会和其他名称空间中相同的名称发生冲突，同时允许程序的其他部分
+    使用该名称空间中声明的东西。
+sample:
+    namespace Jack {
+      double pail;
+      void fetch();
+      int pal;
+      struct Well {..};
+    }
+    namespace Jill {
+      double bucket(double n) {...};
+      double fetch;
+      int pal;
+      struct Hill {...};
+    }
+   名称空间可以是全局的，也可以位于另一个名称空间之中，但是不能位于代码块中，在默认情况下，在名称空间中声明的名称的链接性是外部的(除非它引用了常量）。
+   
+   名称空间是开放(open)的，可以把名称加入到已有的名称空间，例如:
+   namespace Jill {
+    char * goose(const char *);
+   }
+   将goose添加到Jill已有的名称列表中。
+   namespace Jack {
+    void fetch()
+    {
+      ...
+    }
+   }
+   为Jack名称空间提供fetch的函数定义。
+(3) 名称空间的访问
+    a)  最简单的方法！使用域名解析运算符::来访问:
+        Jack::pail = 12.34; //  use a variable
+        Jill::Hill = mole;  // Create a type Hill structure
+        Jack::fetch();  // use a function
+        
+        未被装饰的名称(如pail)称为未被限定的名称(unqualified name),包含名称空间的名称(如Jack::pail)成为限定的名称(qualified name)
+    b)   using声明~使特定标识符可用 using编译指令~使整个名称空间可用
+      1. using Jill::fetch;  //  将Jill名称空间中的fetch加入到这句语句所属的 !!声明区域!! 中。之后在这个声明区域中就可以用fetch来代替Jill::fetch
+         fetch和其他局部变量一样，也会对全局变量有屏蔽作用:
+      namespace Jill {
+        double bucket(double n) { ... }
+        double fetch;
+        struct Hill {...};
+      }
+      char fetch;
+      int main()
+      {
+        using Jill::fetch;
+        double fetch; //  invalid, already have a local fetch(Ji::fetch)
+        cin >> fetch; //  local one
+        cin >> ::fetch; //  global one
+      }
+      2. using namespace Jill;  //  将Jill名称空间的所有名称添加到当前的声明区域中。
+      
+      using 和 using namespace 增加了名称冲突的可能性，但是使用域解析运算符::则不会存在二义性。
+(4) using 与 using namespace 的区别
+    假设名称空间和声明区域定义了相同的名称，如果试图使用 using 声明将名称空间的名称导入该声明区域，将会产生冲突而出错，但是如果使用using namespace
+    导入整个名称空间的名称，局部版本将会隐藏名称空间版本，我们知道编译器能捕捉的错误总是容易发现的，因此using会更安全一些，当然，使用域解析运算符::
+    则可以同时使用名称空间中的变量和定义的变量。
+
+问题: 名称空间和全局变量谁屏蔽谁？
+(5) 名称空间的嵌套
+a)
+  namespace elements
+  {
+    namespace fire
+    {
+      int flame;
+    }
+    float water;
+  }
+  这里的 flame 实际上是 element::fire::flame,可以使用 using namespace elements::fire;
+b) 可以在名称空间中使用using 和 using编译指令  
+  namespace myth
+  {
+    using Jill::fetch;  //  Jill::fetch 在myth的名称被using指令声明
+    using namespace elements;
+    using std::cout;
+    using std::cin;
+  }
+  std::cin >> myth::fetch;  //  valid
+  std::cin >> Jill::fetch;  //  valid,fetch同时也在Jill的名称空间中
+  using namespace myth;
+  cin >> fetch;
+  
+  using namespace myth;   ~   using namespace myth; using namespace elements;
+  
+  namespace mvft = my_very_facorite_things; //  给名称空间起一个别名
+  namespace MEF = myth::elements::fire; //  简化嵌套
+   
+   
+   
+   
+   
+   

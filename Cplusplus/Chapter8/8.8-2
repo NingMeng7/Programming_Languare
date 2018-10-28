@@ -1,0 +1,35 @@
+#include <iostream>
+#include <string>
+using namespace std;
+struct CandyBar
+{
+	string name;
+	double weight;
+	int calo;
+};
+void set(CandyBar &, const char *, const double, const int);
+void print(const CandyBar &);	//	不修改的时候请尽量用常引用
+
+int main()
+{
+	CandyBar candy = {};
+	set(candy, "Hello Kity", 3.0, 5);
+	print(candy);
+	while (cin.get() != 'q')
+		;
+	return 0;
+}
+
+void set(CandyBar &candy, const char *str, const double weight, const int calo)
+{
+	candy.name = str;
+	candy.weight = weight;
+	candy.calo = calo;
+}
+
+void print(const CandyBar & candy)
+{
+	cout << "name: " << candy.name << endl;
+	cout << "weight: " << candy.weight << endl;
+	cout << "calories: " << candy.calo << endl;
+}

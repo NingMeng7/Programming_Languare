@@ -1,0 +1,60 @@
+#include <iostream>
+void swapr(int &a, int &b);	//	按引用传递参数
+void swapp(int *p, int *q);	//	传递变量的指针
+void swapv(int a, int b);	//	按值传递(拷贝)
+
+int main()
+{
+	using namespace std;
+	int wallet1 = 300;
+	int wallet2 = 350;
+	cout << "wallet1 = $" << wallet1 << endl;
+	cout << "wallet2 = $" << wallet2 << endl;
+	cout << endl;
+
+	cout << "Using references to sway contents:\n";
+	swapr(wallet1, wallet2);
+	cout << "wallet1 = $" << wallet1 << endl;
+	cout << "wallet2 = $" << wallet2 << endl;
+	cout << endl;
+
+	cout << "Using pointers to swap contens again:\n";
+	swapp(&wallet1, &wallet2);	//	传递地址
+	cout << "wallet1 = $" << wallet1 << endl;
+	cout << "wallet2 = $" << wallet2 << endl;
+	cout << endl;
+
+	cout << "Trying to use passing by value:\n";
+	swapv(wallet1, wallet2);
+	cout << "wallet1 = $" << wallet1 << endl;
+	cout << "wallet2 = $" << wallet2 << endl;
+	cout << endl;
+
+	while (cin.get() != 'q')
+		;
+	return 0;
+}
+
+void swapr(int &a, int &b)
+{
+	int temp;
+	temp = a;
+	a = b;
+	b = temp;
+}
+
+void swapp(int *p, int *q)
+{
+	int temp;
+	temp = *p;
+	*p = *q;
+	*q = temp;
+}
+
+void swapv(int a, int b)
+{
+	int temp;
+	temp = a;
+	a = b;
+	b = temp;
+}

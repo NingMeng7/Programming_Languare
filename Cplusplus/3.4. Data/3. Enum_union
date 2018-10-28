@@ -1,0 +1,17 @@
+The sample of Union's syntax
+
+union one4all
+{
+  int int_val;
+  long long_val;
+  double double_val;
+};
+
+one4fall pail;
+pail.int_val = 16;
+pail.double_val = 1.38;
+
+
+a)  one4all共用体可能是int,long,double，但某一时间它只能是其中一种类型，因此共用体的长度为最大成员的长度
+b)  共用体常常用于(但并非只用于)节省内存
+c)  在一些有数据的类型不定的情形共用体得到应用(见sample code)

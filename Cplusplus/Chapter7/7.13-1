@@ -1,0 +1,21 @@
+#include <iostream>
+double calculate(double x, double y);
+int main()
+{
+	using namespace std;
+	double result, x, y;
+	cout << "Please enter two real number: ";
+	cin >> x >> y;
+	while (x * y != 0) {
+		result = calculate(x, y);
+		cout << "The result is: " << result << endl;
+		cout << "Please enter two real number: ";
+		cin >> x >> y;
+	}
+	return 0;
+}
+
+double calculate(double x, double y)
+{
+	return 2.0 * x * y / (x + y);
+}

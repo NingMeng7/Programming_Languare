@@ -1,0 +1,16 @@
+#include <iostream>
+#include <cstring>
+int main()
+{
+	using namespace std;
+	char name1[30];
+	char name2[30];
+	cout << "Please enter your first name: " << endl;
+	cin.getline(name1, 30);
+	cout << "Please enter your last name: " << endl;
+	cin.getline(name2, 30);
+	cout << "Here's the information in a single string: " << name2 << ", " << name1 << endl;
+	while (cin.get() != 'q')
+		;
+	return 0;
+}

@@ -1,0 +1,30 @@
+#include <iostream>
+#include <cctype>
+#include <string>
+using namespace std;
+string toupper_string(string);
+
+int main()
+{
+	string str;
+	cout << "Please enter a string (q to quit): ";
+	getline(cin, str);
+	while (str != "q") {
+		cout << toupper_string(str) << endl;
+		cout << "Next string (q to quit): ";
+		getline(cin, str);
+	}
+	cout << "Bye!" << endl;
+	while (cin.get() != 'q')
+		;
+	return 0;
+}
+
+string toupper_string(string str)
+{
+	string temp = "";
+	for (int i = 0; i < str.size(); i++) {
+		temp += toupper(str[i]);
+	}
+	return temp;
+}

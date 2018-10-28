@@ -1,0 +1,40 @@
+#include <iostream>
+#include <string>
+const int Month = 12;
+int main()
+{
+	using namespace std;
+	int sum = 0;
+	string	month[12] = 
+	{
+		{"January"},
+		{"February"},
+		{"March"},
+		{"April"},
+		{"May"},
+		{"June"},
+		{"July"},
+		{"August"},
+		{"September"},
+		{"Octorber"},
+		{"November"},
+		{"December"}
+	};
+	int record[Month];
+	for (int i = 0; i < Month; i++) {
+		cout << "Please enther the sales volume of " << month[i] << ": ";
+		cin >> record[i];
+		sum += record[i];
+	}
+
+
+	for (int i = 0; i < Month; i++) {
+		cout << "the sales volume of " << month[i] << ":\t";
+		cout << record[i];
+		cout << endl;
+	}
+
+
+	cout << "The sales volume of the whole year:\t" << sum;
+	return 0;
+}

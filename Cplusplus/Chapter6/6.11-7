@@ -1,0 +1,37 @@
+#include <iostream>
+#include <cctype>
+#include <cstring>
+int main()
+{
+	using namespace std;
+	char word[100];
+	int	count[3] = { 0 };
+	while (cin >> word && (strcmp(word, "q"))){
+		if (word[0] == '\n')
+			continue;
+		if (isalpha(word[0])) {
+			switch (word[0])
+			{
+				case 'i':;
+				case 'I':;
+				case 'e':;
+				case 'E':;
+				case 'o':;
+				case 'O':;
+				case 'a':;
+				case 'A':;
+				case 'u':;
+				case 'U':	++count[0];	break;
+				default:	++count[1];	break;
+			}
+		}
+		else
+			++count[2];
+	}
+	cout << count[0] << " words beginning with vowels" << endl;
+	cout << count[1] << " words beginning with consonants" << endl;
+	cout << count[2] << " others" << endl;
+	while (cin.get() != 'q')
+		;
+	return 0;
+}

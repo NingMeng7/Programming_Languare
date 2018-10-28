@@ -1,0 +1,116 @@
+1.  char actor[30];
+    short betsie[100];
+    float chuck[13];
+    long double dipsea[64];
+
+2.  array <char,30> actor;
+    array <short,100> betsie;
+    array <float,13> chuck;
+    array <long double,64> dipsea;
+
+3.  int a[5] = {1,3,5,7,9};
+
+4.  even = a[0] + a[4];
+
+5.  std::cout << ideas[1] << endl;
+
+6.  char str[] = "cheeseburger";
+
+7.  string str = "Waldorf Salad";
+
+8.  struct fish {
+      char kind[30];
+      int weight;
+      float length;
+    };
+
+9.  fish f = {
+       "Li Yu",
+       40,
+       20.7
+    };
+   
+10. 
+#include <iostream>
+enum Responce { Yes = 1, No = 0,Maybe = 2 };
+int main()
+{
+	using namespace std;
+	Responce answer = Yes;
+	cout << answer << endl;
+	while (cin.get() != 'q')
+		;
+	return 0;
+}
+
+11.
+double * p = & ted;
+cout << * p << endl;
+
+12.
+float * p = treacle;
+cout << *p << endl;
+cout << *(p+9) << endl;
+
+13.
+#include <iostream>
+#include <vector>
+int main()
+{
+	using namespace std;
+	int n;
+	cout << "Please enter an integer n: " << endl;
+	cin >> n;
+	int * p = new int[n];
+	vector <int> vec(10);
+	delete[]p;
+	while (cin.get() != 'q')
+		;
+	return 0;
+}
+
+14.
+0025CBC0
+地址
+
+15.
+#include <iostream>
+#include <cstring>
+struct fish {
+	char kind[30];
+	int weight;
+	float length;
+};
+int main()
+{
+	using namespace std;
+	fish * p = new fish;
+	strcpy_s(p->kind, "aabb");
+	p->weight = 50;
+	p->length = 30.0f;
+	cout << p->kind << endl;
+	cout << p->weight << endl;
+	cout << p->length << endl;
+	while (cin.get() != 'q')
+		;
+	return 0;
+}
+
+16. 
+可以执行，这是由于cin以blank tab enter结尾，但是两个cin之间的所有这三类词会被忽略
+问题是有一些不安全，可能会存在用户超出大小的输入的问题
+
+17.
+#include <iostream>
+#include <string>
+#include <vector>
+#include <array>
+const int N = 10;
+int main()
+{
+	std::vector <std::string> vec(N);
+	std::array <std::string, 10> arr;
+	while (std::cin.get() != 'q')
+		;
+	return 0;
+}

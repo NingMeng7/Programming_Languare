@@ -1,0 +1,53 @@
+#include <iostream>
+#include <string>
+const int Month = 12;
+const int Year = 3;
+int main()
+{
+	using namespace std;
+	int sum = 0;
+	string	month[12] = 
+	{
+		{"January"},
+		{"February"},
+		{"March"},
+		{"April"},
+		{"May"},
+		{"June"},
+		{"July"},
+		{"August"},
+		{"September"},
+		{"Octorber"},
+		{"November"},
+		{"December"}
+	};
+	int record[Year][Month];
+	int year[Year] = { 0 };
+	for (int i = 0; i < Year; i++) {
+		cout << "Please enter the sales volume of " << (i + 1) << " year: " << endl;
+		for (int j = 0; j < Month; j++) {
+			cout << "Please enther the sales volume of " << month[j] << ": ";
+			cin >> record[i][j];
+			year[i] += record[i][j];
+		}
+	}
+
+
+	for (int i = 0; i < Year; i++) {
+		cout << "Here is the sales record of  " << (i + 1) << "year: " << endl;
+		for (int j = 0; j < Month; j++) {
+			cout << month[j] << ":\t" << record[i][j] << endl;
+		}
+	}
+
+	
+	for (int i = 0; i < Year; i++) {
+		cout << "The sales volume of " << (i+1) << " year:\t" << year[i] << endl;
+		sum += year[i];
+	}
+	cout << "The sales volume of three year:\t" << sum << endl;
+	
+	while (cin.get() != 'q')
+		;
+	return 0;
+}

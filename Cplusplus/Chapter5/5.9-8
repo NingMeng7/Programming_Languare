@@ -1,0 +1,19 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+int main()
+{
+	char word[100];
+	int count = 0;
+	cout << "Please enter the word: ";
+	cin >> word;
+	while (strcmp(word, "done")) {
+		count++;
+		cin >> word;
+	}
+	cout << "You have entered " << count << " words!" << endl;
+	while (cin.get() != 'q')
+		;
+	return 0;
+}

@@ -1,0 +1,49 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+template <typename T>
+T max(T arr[], int n);
+template <> const char * max<const char *>(const char * arr[], int n);
+int main()
+{
+	int arr1[6] = { 1, 2, 3, 4, 5, 6 };
+	double arr2[4] = { 1.0,2.0,3.0,4.0,};
+	const char * arr3[3] = {
+		"123",
+		"1234",
+		"12345"
+	};
+	cout << max(arr1, 6) << endl;
+	cout << max(arr2, 4) << endl;
+	cout << max(arr3, 3);
+	while (cin.get() != 'q')
+		;
+	return 0;
+}
+
+
+template <> const char * max<const char *>(const char * arr[], int n)
+{
+	int temp, max;
+	max = temp = 0;
+	int size = strlen(arr[0]);
+	for (int i = 1; i < n; i++) {
+		temp = strlen(arr[i]);
+		if (temp > size) {
+			size = temp;
+			max = i;
+		}
+	}
+	return arr[max];
+}
+
+template <typename T>
+T max(T arr[], int n)
+{
+	T max_ = arr[0];
+	for (int i = 1; i < n; i++) {
+		if (arr[i] > max_)
+			max_ = arr[i];
+	}
+	return max_;
+}

@@ -1,0 +1,15 @@
+#include <iostream>
+#include <string>
+int main()
+{
+	using namespace std;
+	string name1, name2;
+	cout << "Please enter your first name: " << endl;
+	getline(cin, name1);
+	cout << "Please enter your last name: " << endl;
+	getline(cin, name2);
+	cout << "Here's the information in a single string: " << name2 + ", " + name1 << endl;
+	while (cin.get() != 'q')
+		;
+	return 0;
+}

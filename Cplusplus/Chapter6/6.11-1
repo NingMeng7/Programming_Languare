@@ -1,0 +1,18 @@
+#include <iostream>
+#include <cctype>
+int main()
+{
+	using namespace std;
+	char ch;
+	while ((ch = cin.get()) != '@') {	//	赋值的优先级小于!=，这个括号必不可少
+		if (isupper(ch))
+			cout << char(tolower(ch));
+		else if (islower(ch))
+			cout << char(toupper(ch));
+		else if (isdigit(ch))
+			;
+		else
+			cout << char(ch);
+	}
+	return 0;
+}
