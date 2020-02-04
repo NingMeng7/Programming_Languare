@@ -1,5 +1,0 @@
-a)  cin.get(ch) :将字符赋给参数ch(事实上这里涉及到了引用)  ch = cin.get() : 将函数返回值赋值给ch
-b)  cin.get(ch)的返回值是istream对象, bool转换后，当输入成功为true  ch = cin.get() :int类型的字符编码
-c)  到达EOF的返回值:cin.get(ch) : istream对象，bool转换后为false ch = cin.get()  EOF(通常为 - 1)
-d)  不能以 abcdef(EOF)的形式输入text，而只能先在f后进行回车，再输入EOF
-
