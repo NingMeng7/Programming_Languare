@@ -1,1 +1,0 @@
-一些关于模块numpy的sample code

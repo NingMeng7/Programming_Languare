@@ -95,7 +95,6 @@ Optional plotz says to frobnicate the bizbaz first.
 don't:
 i 单个字母作为变量, 特别是类似l这种难以区分的, 除非是习惯性的迭代性变量
 ii 模块名 短 且 小写, 必要时可以增加下划线改善可读性
-iii 
 
 1 lower_case_with_underscores
 2 函数名应该是小写的，有必要的话用下划线来分隔单词提高可读性。
